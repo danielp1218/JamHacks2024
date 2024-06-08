@@ -4,9 +4,8 @@ import { supabase } from "./supabase";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         const { wallet, firstName, lastName } = req.body;
-        const { data, error } = await supabase
-            .from('users')
-            .insert([
+        // @ts-ignore
+        const { data, error } = await supabase.from('users').insert([
                 { wallet: wallet, first_name: firstName, last_name: lastName }
             ])
             .select()
