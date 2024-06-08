@@ -12,6 +12,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mantine/core": "^7.10.1",
+    "@mantine/form": "^7.10.1",
+    "@mantine/hooks": "^7.10.1",
     "@near-wallet-selector/core": "^8.9.7",
     "@near-wallet-selector/here-wallet": "^8.9.7",
     "@near-wallet-selector/modal-ui": "^8.9.7",
@@ -38,6 +41,9 @@
   },
   "devDependencies": {
     "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.2"
+    "eslint-config-next": "14.2.2",
+    "postcss": "^8.4.38",
+    "postcss-preset-mantine": "^1.15.0",
+    "postcss-simple-vars": "^7.0.1"
   }
 }

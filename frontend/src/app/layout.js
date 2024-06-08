@@ -3,11 +3,14 @@
 import { useEffect, useState } from 'react';
 
 import '@/app/globals.css';
+import '@mantine/core/styles.css';
 import { NearContext } from '@/context';
 import { Navigation } from '@/components/navigation';
 import { NetworkId, HelloNearContract } from '@/config';
 
 import { Wallet } from '@/wallets/near';
+
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 const wallet = new Wallet({ networkId: NetworkId, createAccessKeyFor: HelloNearContract });
 
@@ -19,11 +22,16 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body>
-        <NearContext.Provider value={{ wallet, signedAccountId }}>
-          <Navigation />
-          {children}
-        </NearContext.Provider>
+        <MantineProvider>
+          <NearContext.Provider value={{ wallet, signedAccountId }}>
+            <Navigation />
+            {children}
+          </NearContext.Provider>
+        </MantineProvider>
       </body>
     </html>
   );
