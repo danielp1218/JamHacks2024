@@ -13,8 +13,8 @@ const CONTRACT = HelloNearContract;
 export default function HelloNear() {
   const { signedAccountId, wallet } = useContext(NearContext);
 
-  const [greeting, setGreeting] = useState('loading...');
-  const [newGreeting, setNewGreeting] = useState('loading...');
+  const [greeting, setGreeting] = useState(['']);
+  const [newGreeting, setNewGreeting] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
 
@@ -22,7 +22,7 @@ export default function HelloNear() {
     if (!wallet) return;
 
     wallet.viewMethod({ contractId: CONTRACT, method: 'get_greeting' })
-      .then(greeting => setGreeting(greeting));
+      .then(greeting => setGreeting([greeting]));
   }, [wallet]);
 
   useEffect(() => {
@@ -32,8 +32,8 @@ export default function HelloNear() {
   const storeGreeting = async () => {
     setShowSpinner(true);
     await wallet.callMethod({ contractId: CONTRACT, method: 'set_greeting', args: { greeting: newGreeting } });
-    const greeting = await wallet.viewMethod({ contractId: CONTRACT, method: 'get_greeting' });
-    setGreeting(greeting);
+    const latestGreeting = await wallet.viewMethod({ contractId: CONTRACT, method: 'get_greeting' });
+    setGreeting(prevGreetings => [...prevGreetings, latestGreeting]);
     setShowSpinner(false);
   };
 
@@ -47,7 +47,8 @@ export default function HelloNear() {
       </div>
 
       <div className={styles.center}>
-        <h1 className="w-100"> The contract says: <code>{greeting}</code> </h1>
+        <h1 className="w-100"> conditions: </h1>
+        <p><code>{greeting.join(', ')}</code></p>
         <div className="input-group" hidden={!loggedIn}>
           <input type="text" className="form-control w-20" placeholder="Store a new greeting" onChange={t => setNewGreeting(t.target.value)} />
           <div className="input-group-append">
