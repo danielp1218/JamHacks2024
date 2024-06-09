@@ -69,9 +69,11 @@ export default function App() {
                 {/* <Button isIconOnly color="primary" aria-label="Like">
                     <AddIcon />
                 </Button> */}
+                <a href="/user-view/doctor-view">
                 <Button isIconOnly color="primary" aria-label="Like">
                     <ArrowIcon />
-                </Button>   
+                </Button>
+                </a>
             </div>
             <div className="fixed bottom-3 right-3">
                 <QrcodeModal id={user?user.uuid:""}/>

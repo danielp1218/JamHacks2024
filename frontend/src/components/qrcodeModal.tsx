@@ -12,9 +12,11 @@ export function QrcodeModal({id}) {
 
     return (
         <>
-            <div className="flex flex-wrap gap-3">
-                <Button onPress={() =>onOpen()}>Add Doctor</Button>
+            <div className="">
+                <Button onPress={() =>onOpen()} color="primary" className="p-0 w-[40px]">+</Button>
+
             </div>
+
             <Modal
                 size={"md"}
                 isOpen={isOpen}
