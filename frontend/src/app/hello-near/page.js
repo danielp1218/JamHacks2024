@@ -12,7 +12,6 @@ const CONTRACT = HelloNearContract;
 
 export default function HelloNear() {
   const { signedAccountId, wallet } = useContext(NearContext);
-
   const [greeting, setGreeting] = useState(['']);
   const [newGreeting, setNewGreeting] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
