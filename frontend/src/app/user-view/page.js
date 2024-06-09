@@ -9,7 +9,7 @@ import {Button} from "@nextui-org/react";
 import {ArrowIcon} from './ArrowIcon';
 import {AddIcon} from './AddIcon';
 
-export default function HelloNear() {
+export default function App() {
     const {signedAccountId, wallet} = useContext(NearContext);
     const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
