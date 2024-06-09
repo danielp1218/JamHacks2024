@@ -33,7 +33,8 @@
     "next": "14.2.0",
     "pino-pretty": "^11.0.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-vertical-timeline-component": "^3.6.0"
   },
   "overrides": {
     "near-api-js": "^3.0.4"
