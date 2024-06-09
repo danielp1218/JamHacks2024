@@ -4,6 +4,7 @@ import { useEffect, useState, useContext } from 'react';
 
 import { NearContext } from '@/context';
 import NearLogo from '/public/near-logo.svg';
+import {redirect} from "next/navigation";
 
 export const Navigation = () => {
   const { signedAccountId, wallet } = useContext(NearContext);
@@ -15,6 +16,7 @@ export const Navigation = () => {
     if (signedAccountId) {
       setAction(() => wallet.signOut);
       setLabel(`Logout ${signedAccountId}`);
+      if(window.location.pathname ==="/") redirect("/register");
     } else {
       setAction(() => wallet.signIn);
       setLabel('Login');

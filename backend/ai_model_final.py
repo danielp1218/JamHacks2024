@@ -55,7 +55,7 @@ def prediction_function(model_path, image_path):
 
     def load_model(model_path):
         model = CNN()
-        state_dict = torch.load(model_path, map_location=torch.device('cpu'))
+        state_dict = torch.load(model_path, map_location=torch.device('gpu'))
         model.load_state_dict(state_dict)
         model.eval()
         return model

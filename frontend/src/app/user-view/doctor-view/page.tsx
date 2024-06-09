@@ -20,6 +20,16 @@ export default function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
 
+    const getDate = () => {
+        const currentdate = new Date();
+        return currentdate.getDate() + "/"
+            + (currentdate.getMonth()+1)  + "/"
+            + currentdate.getFullYear() + " @ "
+            + currentdate.getHours() + ":"
+            + currentdate.getMinutes() + ":"
+            + currentdate.getSeconds();
+    }
+
     let iconStyles = { background: "#3f4a5c"};
     let items: {key: string, label: string}[] = [];
     useEffect(() => {
@@ -37,29 +47,59 @@ export default function App() {
         }
     }, [signedAccountId]);
 
-
     const rows = [
         {
             key: "1",
-            name: "John Smith",
+            date: "April 1, 2021",
             conditions: ["Diabetes", "Hypertension"]
         },
         {
             key: "2",
-            name: "Bob Smith",
+            date: "April 1, 2021",
             conditions: ["Diabetes", "Hypertension"]
         },];
 
     const columns = [
         {
-            key: "name",
-            label: "NAME",
+            key: "date",
+            label: "DATE",
         },
         {
             key: "conditions",
             label: "CONDITIONS",
         }
     ];
+
+    const [encodeImageFileAsURL, setEncodeImageFileAsURL] = useState(() => {});
+
+    useEffect(() => {
+        setEncodeImageFileAsURL (() => {
+            let filesSelected = (document.getElementById("inputFileToLoad") as HTMLInputElement)!.files!;
+            if (filesSelected.length > 0) {
+                let fileToLoad = filesSelected[0];
+
+                let fileReader = new FileReader();
+
+                fileReader.onload = function(fileLoadedEvent) {
+                    let srcData = fileLoadedEvent.target!.result; // <--- data: base64
+
+                    let newImage = document.createElement('img');
+                    newImage.src = srcData! as string;
+
+                    document.getElementById("imgTest")!.innerHTML = newImage.outerHTML;
+                    const b64 = document.getElementById("imgTest")!.innerHTML;
+                    console.log("Converted Base64 version is " + b64);
+                    const response = fetch('https://platypus-splendid-rattler.ngrok-free.app/'+b64, {
+                        method: 'GET'
+                    });
+                    console.log(response);
+                }
+                fileReader.readAsDataURL(fileToLoad);
+
+            }
+
+        });
+    });
 
     return (
         <main>
@@ -96,7 +136,8 @@ export default function App() {
                     </TableBody>
                 </Table>
             </div>
-
+            <input id="inputFileToLoad" type="file" onChange={encodeImageFileAsURL} />
+            <div id="imgTest"></div>
         </main>
     )
 }
