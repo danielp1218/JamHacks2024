@@ -1,42 +1,44 @@
 import {NextResponse} from "next/server";
-import { supabase } from "../supabase";
-import PostgrestError from "@supabase/postgrest-js/src/PostgrestError";
-
-const getPatientList = async (doctorID: string) => {
-    const { data, error } = await supabase
-        .from('users')
-        .select('patients')
-        .eq('id', doctorID)
-    if (error) {
-        return error;
-    }
-    return data[0]['patients'];
-}
-
-const getDoctorList = async (patientID: string) => {
-    const { data, error } = await supabase
-        .from('users')
-        .select('doctors')
-        .eq('id', patientID)
-    if (error) {
-        return error;
-    }
-    return data[0]['doctors'];
-}
+import { supabase } from "../util/supabase";
+import {walletToId} from "@/app/api/util/convert";
 
 export async function POST(request: Request) {
-    const patientID = request.url.split('/')[2];
-    const { doctorID } = await request.json();
-    let patientsRes = await getPatientList(doctorID);
-    let doctorsRes = await getDoctorList(patientID);
-    if(patientsRes instanceof PostgrestError || doctorsRes instanceof PostgrestError) {
-        return NextResponse.json({ error: 'error' }, { status: 500 });
+    const { doctorWallet, patientID } = await request.json();
+    const doctorID = await walletToId(doctorWallet);
+
+    let patientList: string[] = [];
+    let doctorList: string[] = [];
+    let err:any  = null;
+    await supabase.from('users')
+        .select()
+        .eq('uuid', doctorID).then(({ data, error }) => {
+            if (error) {
+                err = error;
+            } else{
+                patientList = data[0].patients!;
+            }
+        });
+    if(err){
+        return NextResponse.json({ message: err }, { status: 500 });
     }
-    let patientList = patientsRes as string[];
-    let doctorList = doctorsRes as string[];
+    await supabase.from('users')
+        .select()
+        .eq('uuid', patientID).then(({ data, error }) => {
+            if (error) {
+                err = error;
+            } else{
+                doctorList = data[0].doctors!;
+            }
+        });
+    if(err){
+        return NextResponse.json({ message: err }, { status: 500 });
+    }
+    if(patientList.includes(patientID) || doctorList.includes(doctorID)){
+        return NextResponse.json({ message: 'User is already a patient!' }, { status: 200 });
+    }
     patientList.push(patientID);
     doctorList.push(doctorID);
-    supabase.from('users').update({patients: patientList }).eq('id', doctorID).select()
-    supabase.from('users').update({doctors: doctorList }).eq('id', patientID).select()
-    return NextResponse.json({ message: 'success!' }, { status: 200 });
+    await supabase.from('users').update({patients: patientList }).eq('uuid', doctorID).select()
+    await supabase.from('users').update({doctors: doctorList }).eq('uuid', patientID).select()
+    return NextResponse.json({ message: 'Successfully added!' }, { status: 200 });
 }

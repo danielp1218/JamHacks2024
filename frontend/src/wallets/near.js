@@ -61,6 +61,7 @@ export class Wallet {
   signIn = async () => {
     const modal = setupModal(await this.selector, { contractId: this.createAccessKeyFor });
     modal.show();
+
   };
 
   /**

@@ -36,7 +36,8 @@
     "next": "14.2.0",
     "pino-pretty": "^11.0.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-qr-code": "^2.0.14"
   },
   "overrides": {
     "near-api-js": "^3.0.4"
