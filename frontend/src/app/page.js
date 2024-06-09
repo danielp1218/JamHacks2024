@@ -8,7 +8,8 @@ import { Cards } from '@/components/cards';
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div className={styles.description}> 
+      <div className={styles.description}>
+        <h1 className={styles.title}>Blah<h1>
     </div>
 
       <div className={styles.center}>
