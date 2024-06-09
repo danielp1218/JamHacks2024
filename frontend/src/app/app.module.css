@@ -7,6 +7,13 @@
   min-height: 100vh;
 }
 
+.title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #ff0000;
+}
+
 .description {
   display: inherit;
   justify-content: inherit;
