@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <h1 className={styles.title}>Blah<h1>
+         <h1 className="text-3xl font-bold text-center my-4">blah</h1>
     </div>
 
       <div className={styles.center}>
