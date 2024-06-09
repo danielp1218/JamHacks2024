@@ -14,7 +14,7 @@ export default function App() {
         return await response.json();
     }
 
-    userExists(signedAccountId).then((exists) => {if(exists) window.location.replace("/user-view")});
+    //userExists(signedAccountId).then((exists) => {if(exists) window.location.replace("/user-view")});
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         console.log("submit")
         event.preventDefault()
