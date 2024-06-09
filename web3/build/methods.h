@@ -1,0 +1,4 @@
+DEFINE_NEAR_METHOD(add_diagnosis)
+DEFINE_NEAR_METHOD(add_user)
+DEFINE_NEAR_METHOD(get_diagnosis)
+DEFINE_NEAR_METHOD(init)
