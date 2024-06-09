@@ -65,10 +65,10 @@ export default function HelloNear() {
                     }
                 </VerticalTimeline>
             </div>
-            <div className="relative w-full flex flex-col justify-content-end align-items-end pt-32 pr-10 space-y-5">
-                <Button isIconOnly color="primary" aria-label="Like">
+            <div className="fixed bottom-16 right-10">
+                {/* <Button isIconOnly color="primary" aria-label="Like">
                     <AddIcon />
-                </Button>
+                </Button> */}
                 <Button isIconOnly color="primary" aria-label="Like">
                     <ArrowIcon />
                 </Button>   
